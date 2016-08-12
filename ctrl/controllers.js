@@ -1,6 +1,5 @@
 angular.module('lifetools.controllers', [])
-
-.controller('infoController', function($timeout,$rootScope,$scope, $http, $ionicLoading,$ionicPopup) {
+.controller('dd',function($timeout,$rootScope,$scope, $http, $ionicLoading,$ionicPopup){
 	
 	//获取当前日期
 	$scope.getdate = function(){
@@ -47,42 +46,6 @@ angular.module('lifetools.controllers', [])
 	//今日历史变量的集合对象
 	var datas = $scope.datas = {};
 	datas.tag = true;
-	//今日历史变量的集合对象
-	var siri = $scope.siri = {};
-	siri.tag = true;
-	//请求今天日历数据
-	clime.getDateMs = function(){
-		$http.get('view/calendar.php').success(function(res){
-			console.log(res);
-		});
-	}
-	clime.getMs();
-	/*ionic.DomUtil.ready(function(){
-		//console.log(document.querySelectorAll('.sidr'));
-		angular.element(document.querySelectorAll('.sidr')).on('click',function(){
-			console.log(clime);
-		})
-	});
-	$timeout(function(){
-		console.log(document.querySelectorAll('.sidr'));
-		var sidr = document.querySelectorAll('.sidr');
-		//angular.element(sidr).hasClass('tab-active') && ?
-		angular.element(sidr).on('click',function(){
-			console.log(this.prototype);
-			if(this.textContent == '今日天气'){
-				datas.hist=true;
-			}else{
-				datas.hist=false;
-			}
-			
-			
-		})
-		
-		
-	},700)*/
-	
-	
-	
 	/*
 	 
 	 * 今日历史
@@ -182,6 +145,46 @@ angular.module('lifetools.controllers', [])
         }
     };
 
+})
+.controller('infoController', function($timeout,$rootScope,$scope, $http, $ionicLoading,$ionicPopup) {
+	var clime = $scope.clime = {};
+	//今日历史变量的集合对象
+	var siri = $scope.siri = {};
+	siri.tag = true;
+	//请求今天日历数据
+	clime.getDateMs = function(){
+		$http.get('view/calendar.php').success(function(res){
+			console.log(res);
+		});
+	}
+	clime.getDateMs();
+	/*ionic.DomUtil.ready(function(){
+		//console.log(document.querySelectorAll('.sidr'));
+		angular.element(document.querySelectorAll('.sidr')).on('click',function(){
+			console.log(clime);
+		})
+	});
+	$timeout(function(){
+		console.log(document.querySelectorAll('.sidr'));
+		var sidr = document.querySelectorAll('.sidr');
+		//angular.element(sidr).hasClass('tab-active') && ?
+		angular.element(sidr).on('click',function(){
+			console.log(this.prototype);
+			if(this.textContent == '今日天气'){
+				datas.hist=true;
+			}else{
+				datas.hist=false;
+			}
+			
+			
+		})
+		
+		
+	},700)*/
+	
+	
+	
+	
 			//---上拉加载更多
 
 		/*$scope.$on('stateChangeSuccess', function() {

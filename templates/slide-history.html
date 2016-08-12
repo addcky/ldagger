@@ -1,0 +1,18 @@
+<ion-refresher pulling-text="..." on-refresh="datas.doRefresh()"></ion-refresher>
+<div class="list list-inset his-search">
+	<label class="item item-input">
+		<i class="icon ion-search placeholder-icon"></i>
+		<input type="text" ng-keyup="datas.myKeyup($event)" ng-model="datas.txtdate" placeholder="按日期搜索(月/日)" />
+	</label>
+</div>
+<div class="list">
+	<a ng-repeat="data in hitem track by $index" ng-href="#/tab/hiscont/{{data.e_id}}" class="his-item">
+		<div class="row his-list" class="his-list">
+			<div class="col col-75">{{($index+1)+' -> '+data.title}}</div>
+			<div class="col col-20">{{data.data}}</div>
+			<div class="col ion-ios-arrow-right"></div>
+		</div>
+	</a>
+</div>
+<p class="his-lookmore" ng-if="datas.lookMore">{{datas.moretxt}}</p>
+<ion-infinite-scroll icon="ion-loading-c" ng-if="datas.stopMore" on-infinite="datas.loadMore()" distance="1%"></ion-infinite-scroll>

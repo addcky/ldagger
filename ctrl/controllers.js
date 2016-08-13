@@ -5,6 +5,7 @@ angular.module('lifetools.controllers', [])
 	//获取当前日期
 	$scope.getdate = function(){
 		$scope.dates = new Date();
+		$scope.year = $scope.dates.getFullYear();
 		$scope.month = $scope.dates.getMonth()+1;
 		$scope.date = $scope.dates.getDate();
 	}
@@ -18,7 +19,6 @@ angular.module('lifetools.controllers', [])
 		});
 	};
 	$scope.hide = function() {
-
 		$ionicLoading.hide();
 	};
 	
@@ -34,8 +34,14 @@ angular.module('lifetools.controllers', [])
 			//console.log(text);
 		});
 	};
-	
-	
+	$rootScope.alertRefresh = function(){
+		$scope.hide();
+		$rootScope.showAlert('网络错误','请刷新···');
+	}
+	$rootScope.alertCheck = function(){
+		$scope.hide();
+		$rootScope.showAlert('网络错误','请检查网络···');
+	}
 	/*
 	 
 	 * 今日天气
@@ -52,12 +58,48 @@ angular.module('lifetools.controllers', [])
 	siri.tag = true;
 	//请求今天日历数据
 	clime.getDateMs = function(){
-		$http.get('view/calendar.php').success(function(res){
-			console.log(res);
-			clime.res = res.result;
+		$http.get('view/calendar.php',{
+			params:{
+				year: $scope.year,
+				month: $scope.month,
+				date: $scope.date
+			}
+		}).success(function(res){
+			//console.log(res.result.data);
+			if(res.reason === 'Success' || res.reason === 'success'){
+				clime.res = res.result.data;
+				clime.arrYMD = clime.res.date.split('-');
+				
+			}else{
+				$rootScope.alertCheck();
+			}
+		}).error(function(){
+			$rootScope.alertRefresh();
 		});
 	}
 	clime.getDateMs();
+	clime.city = '广州';
+	clime.getWthMs = function(){
+		$http.get('view/weather.php',{
+			params:{
+				city: clime.city
+				
+			}
+		}).success(function(res){
+			
+			if(res.reason === 'successed!'){
+				console.log(res.result);
+				//clime.res = res.result.data;
+				//clime.arrYMD = clime.res.date.split('-');
+				
+			}else{
+				$rootScope.alertCheck();
+			}
+		}).error(function(){
+			$rootScope.alertRefresh();
+		});
+	}
+	clime.getWthMs();
 	/*ionic.DomUtil.ready(function(){
 		//console.log(document.querySelectorAll('.sidr'));
 		angular.element(document.querySelectorAll('.sidr')).on('click',function(){
@@ -116,7 +158,7 @@ angular.module('lifetools.controllers', [])
 					$scope.obj = {};
 					$scope.obj.title = data.title;
 					$scope.obj.e_id = data.e_id;
-					$scope.obj.data = data.date.split("年")[0] + '年';
+					$scope.obj.data = data.date.split("年")[0];
 					$scope.rest.unshift($scope.obj);
 				});
 				$scope.hide();
@@ -143,12 +185,10 @@ angular.module('lifetools.controllers', [])
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				};				
 			}else{
-				$scope.hide();
-				$rootScope.showAlert('网络错误','请检查网络···');
+				$rootScope.alertCheck();
 			}
 		}).error(function(){
-			$scope.hide();
-			$rootScope.showAlert('网络错误','请刷新···');
+			$rootScope.alertRefresh();
 		});
 	}
 		//----默认加载内容
@@ -207,28 +247,32 @@ angular.module('lifetools.controllers', [])
 	
 	datas.getMs = function(){
 		$http.get('view/historyId.php', {
-		params: {
-			id: $stateParams.id
-		}
-	}).success(function(res) {
-		//console.log(res)
-		if(res.reason === 'success'){
-			$scope.rest = res.result[0];
-			datas.content = [];
-			$scope.arr = $scope.rest.content.split('\r\n');//.replace(/\r\n/g, 'adslkjaz').replace(/\s*/g, '')
-			angular.forEach($scope.arr, function(data, idx, arr) {
-				if(data != '') {
-					datas.content.push(data);
-				}
-			});
-			//console.log(datas.content);
-		}else{
-			if(res.result == null){
-				$rootScope.showAlert('','详细内容正在搬运中，敬请谅解...');
+			params: {
+				id: $stateParams.id
 			}
-			
-		}
-	});
+		}).success(function(res) {
+			//console.log(res)
+			if(res.reason === 'success'){
+				$scope.rest = res.result[0];
+				datas.content = [];
+				$scope.arr = $scope.rest.content.split('\r\n');//.replace(/\r\n/g, 'adslkjaz').replace(/\s*/g, '')
+				angular.forEach($scope.arr, function(data, idx, arr) {
+					if(data != '') {
+						datas.content.push(data);
+					}
+				});
+				//console.log(datas.content);
+			}else{
+				if(res.result == null){
+					$rootScope.showAlert('','详细内容正在搬运中，敬请谅解...');
+				}else{
+					$rootScope.alertCheck();
+				}
+				
+			}
+		}).error(function(){
+			$rootScope.alertRefresh();
+		});
 	}
 	
 	datas.getMs();

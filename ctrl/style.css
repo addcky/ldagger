@@ -54,14 +54,21 @@ html {
 }
 
 .his-item {
-	display: block;
 	color: #333;
 }
 
 .his-list {
 	border-bottom: 1px solid #11C1F3;
 }
-
+.his-list div:first-child{
+	white-space: nowrap;overflow: hidden;text-overflow: ellipsis;
+}
+.his-list div:first-child span{
+	font-style:italic;font-weight: bold;color: #6B46E5
+}
+.his-list div:nth-last-of-type(2) span{
+	background: #E42112;color: #fff;border-radius: 3px;
+}
 .his-lookmore {
 	width: 65%;
 	text-align: center;
@@ -125,4 +132,75 @@ html {
 	text-indent: 1em;
 	line-height: 1.96;
 	padding: 0 9px;
+}
+
+/*------ririri历----------*/
+.slide-calen{
+	text-align: center;
+	letter-spacing: 2px;
+	box-shadow: none;
+	background: #f0f0f0;
+	background: linear-gradient(135deg, #FF6666 0, #0099CC 100%);
+	background: -webkit-linear-gradient(135deg, #FF6666 0, #0099CC 100%);
+}
+.slide-calen .item{
+	box-shadow: 0 1px 3px rgba(0,0,0,.3);
+	opacity: .8;
+	border: none;
+	background: transparent;
+	color:#FFFFCC;
+}
+.slide-calen-title{
+	border-radius: 4px;
+	text-align: left;
+	position: relative;	
+	width:40%;
+	margin: 10px;
+	background: #336699 !important;
+	font-weight: bold;
+}
+.slide-calen-title::before{
+	z-index: 10;
+	position: absolute;
+	content: '';
+	width: 0;
+	height: 0;
+	border-top:10px solid #fff;
+	border-left:10px solid transparent;
+	border-right:10px solid transparent;
+	top:50%;
+	right:4px;
+}
+.slide-calen-wrap{
+	padding:0;
+	box-shadow: none !important;
+}
+
+.slide-calen-day{	
+	color:#FFFFCC;
+	line-height: 100px;
+	font-size: 70px;
+	font-weight: 700;
+	padding: 0;
+	margin: 12px auto 12px;
+	width:160px;
+	height:100px;
+	background: linear-gradient(45deg, #FF6666 0, #FFCC99 100%);
+	background: -webkit-linear-gradient(45deg, #FF6666 0, #FFCC99 100%);
+}
+.slide-calen-item{
+	padding:0;
+}
+.slide-calen-item button{
+	min-height: 34px;
+	min-width:34px;
+	padding:0;
+	line-height: 34px;
+}
+.slide-calen-btn-yi{
+	background:#33CC99;
+}
+.slide-calen-btn-ji{
+	color:#FFFFCC;
+	background:#FF0033;
 }

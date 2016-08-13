@@ -1,1 +1,49 @@
-<p>{{clime.res}}</p>
+<div class="list slide-calen">
+	<div class="slide-calen-title item item-divider">
+		日日日历
+	</div>
+	<div class="item item-text-wrap slide-calen-wrap">
+		<div class="slide-calen-day col">{{clime.arrYMD[2]}}</div>
+	</div>
+	<div class="item item-divider">
+		{{clime.arrYMD[0]}}年{{clime.arrYMD[1]}}月&ensp;{{clime.res.weekday}}
+	</div>
+	<div class="item item-divider">
+		〓{{clime.res.animalsYear}}〓{{clime.res.lunarYear}}&ensp;&ensp;{{clime.res.lunar}}
+	</div>
+	<div class="item item-text-wrap slide-calen-item">
+		<div class="row row-center">
+			<div class="col"><button class="button slide-calen-btn-yi">
+      宜
+    </button></div>
+			<div class="col col-75">{{clime.res.suit}}</div>
+		</div>
+	</div>
+
+	<div class="item slide-calen-item item-divider">
+		<div class="row row-center">
+			<div class="col"><button class="button slide-calen-btn-ji">
+      忌
+    </button></div>
+			<div class="col col-75">{{clime.res.avoid}}</div>
+
+		</div>
+	</div>
+	
+	<!--riri天气-->
+	<div class="slide-calen-title item item-divider">
+		日日天气
+	</div>
+	<div class="item item-input-inset">
+    	<label class="item-input-wrapper">
+      		<input type="text" placeholder="敢问你来自何方？">
+    	</label>
+    	<button class="button button-small">
+      		确认
+    	</button>
+  	</div>
+  	
+</div>
+
+
+

@@ -6,13 +6,13 @@
 	</label>
 </div>
 <div class="list">
-	<a ng-repeat="data in hitem track by $index" ng-href="#/tab/hiscont/{{data.e_id}}" class="his-item">
-		<div class="row his-list" class="his-list">
-			<div class="col col-75">{{($index+1)+' -> '+data.title}}</div>
-			<div class="col col-20">{{data.data}}</div>
+	<div ng-repeat="data in hitem track by $index" class="his-item item">
+		<a class="row his-list" ng-href="#/tab/hiscont/{{data.e_id}}">
+			<div class="col col-80"><span>{{($index+1)}}&ensp;★&ensp;</span>{{data.title}}</div>
+			<div class="col col-20 padding-left"><span>{{data.data}}</span>年</div>
 			<div class="col ion-ios-arrow-right"></div>
-		</div>
-	</a>
+		</a>
+	</div>
 </div>
 <p class="his-lookmore" ng-if="datas.lookMore">{{datas.moretxt}}</p>
 <ion-infinite-scroll icon="ion-loading-c" ng-if="datas.stopMore" on-infinite="datas.loadMore()" distance="1%"></ion-infinite-scroll>

@@ -71,6 +71,17 @@ angular.module('lifetools', ['ionic','lifetools.controllers'])
       }
 
   })
+  .state('tab.wthcont', {
+      url: '/wthcont/:id',
+      views:{
+          'tab-info':{
+              templateUrl: "templates/slide-wthcont.html",
+              controller:'wthcontController'
+          }
+
+      }
+
+  })
 
   .state('news', {
          url: '/news',

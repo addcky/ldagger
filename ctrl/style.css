@@ -169,7 +169,7 @@ html {
 	border-left:10px solid transparent;
 	border-right:10px solid transparent;
 	top:50%;
-	right:4px;
+	right:7px;
 }
 .slide-calen-wrap{
 	padding:0;
@@ -191,7 +191,7 @@ html {
 .slide-calen-item{
 	padding:0;
 }
-.slide-calen-item button{
+.slide-calen-item button,.slide-wth-btn-day,.slide-wth-btn-night{
 	min-height: 34px;
 	min-width:34px;
 	padding:0;
@@ -203,4 +203,84 @@ html {
 .slide-calen-btn-ji{
 	color:#FFFFCC;
 	background:#FF0033;
+}
+/*riri天气*/
+.slide-wth-ori{
+	text-align: right;
+	padding: 2px;
+	font-size: 11px;
+}
+.slide-wth-ori>span{
+	background: #99CCCC;
+}
+.slide-wth-btn-temp,.slide-wth-btn-info{
+	width:100%;
+	height:60px;
+	font-size:30px;
+	line-height: 60px;
+}
+.slide-wth-btn-temp{
+	background: #FF9933;
+}
+.slide-wth-btn-info{
+	background: #FFCC99;
+}
+.slide-wth-lookmore{
+	padding:16px 0 40px 0;
+}
+.slide-wth-lookmore>a{
+	color:#fff;
+	text-decoration: underline;
+}
+.tleft{
+	text-align: left;
+}
+.colot{
+	color:#CCCCFF !important;
+}
+.slide-sevenwth-wrap{
+	box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.slide-wth-wrap{
+	width:90%;
+	margin: 5px auto;
+	padding: 0;
+	box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.slide-wth-title{
+	color:#000 !important;
+	text-align: center;	
+	width:100%;
+	background: #CCFFFF !important;	
+	font-size: 12px;
+	margin-left: 0;
+	margin-right: 0;
+}
+.slide-wth-btn-night{
+	background: #000;
+	color:#fff;
+}
+.whiteT{
+	color: #fff !important;
+}
+.col-36{
+	-webkit-box-flex: 0;
+    -webkit-flex: 0 0 36%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 36%;
+    -ms-flex: 0 0 36%;
+    flex: 0 0 36%;
+    max-width: 36%;
+}
+.indent2{
+	text-indent: 2em;
+}
+
+
+/*----siri------*/
+.siri-pic-img{
+	width: 100%;
+}
+.siri-foot{
+	margin-bottom: 100px;
 }

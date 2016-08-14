@@ -1,49 +1,78 @@
+<ion-refresher pulling-text="..." on-refresh="wth.doRefresh()"></ion-refresher>
 <div class="list slide-calen">
-	<div class="slide-calen-title item item-divider">
+	<div class="slide-calen-title item item-divider" ng-click="wth.calenClick()">
 		日日日历
 	</div>
-	<div class="item item-text-wrap slide-calen-wrap">
-		<div class="slide-calen-day col">{{clime.arrYMD[2]}}</div>
-	</div>
-	<div class="item item-divider">
-		{{clime.arrYMD[0]}}年{{clime.arrYMD[1]}}月&ensp;{{clime.res.weekday}}
-	</div>
-	<div class="item item-divider">
-		〓{{clime.res.animalsYear}}〓{{clime.res.lunarYear}}&ensp;&ensp;{{clime.res.lunar}}
-	</div>
-	<div class="item item-text-wrap slide-calen-item">
-		<div class="row row-center">
-			<div class="col"><button class="button slide-calen-btn-yi">
-      宜
-    </button></div>
-			<div class="col col-75">{{clime.res.suit}}</div>
+	<div ng-show="wth.calenShow">
+		<div class="item item-text-wrap slide-calen-wrap">
+			<div class="slide-calen-day col">{{wth.arrYMD[2]}}</div>
 		</div>
-	</div>
-
-	<div class="item slide-calen-item item-divider">
-		<div class="row row-center">
-			<div class="col"><button class="button slide-calen-btn-ji">
-      忌
-    </button></div>
-			<div class="col col-75">{{clime.res.avoid}}</div>
-
+		<div class="item item-divider">
+			{{wth.arrYMD[0]}}年{{wth.arrYMD[1]}}月&ensp;{{wth.resp.weekday}}
+		</div>
+		<div class="item item-divider">
+			〓{{wth.resp.animalsYear}}〓{{wth.resp.lunarYear}}&ensp;&ensp;{{wth.resp.lunar}}
+		</div>
+		<div class="item item-text-wrap slide-calen-item">
+			<div class="row row-center">
+				<div class="col">
+					<button class="button slide-calen-btn-yi">
+	    			  	宜
+	    			</button>
+				</div>
+				<div class="col col-75 tleft">{{wth.resp.suit}}</div>
+			</div>
+		</div>
+	
+		<div class="item item-text-wrap slide-calen-item">
+			<div class="row row-center">
+				<div class="col">
+					<button class="button slide-calen-btn-ji">
+						忌
+				    </button>
+				</div>
+				<div class="col col-75 tleft">{{wth.resp.avoid}}</div>
+			</div>
 		</div>
 	</div>
 	
+
 	<!--riri天气-->
 	<div class="slide-calen-title item item-divider">
 		日日天气
 	</div>
 	<div class="item item-input-inset">
-    	<label class="item-input-wrapper">
-      		<input type="text" placeholder="敢问你来自何方？">
+		<label class="item-input-wrapper">
+      		<input type="text" placeholder="敢问你来自何方？" ng-model="wth.city" ng-keyup="wth.enterKeyup($event)">
     	</label>
-    	<button class="button button-small">
+		<button class="button button-small" ng-click="wth.getWthMs()">
       		确认
     	</button>
-  	</div>
-  	
+	</div>
+	
+	<div class="item item-text-wrap slide-calen-item">
+		<div class="row row-center">
+			<div class="col col-34">
+				<button class="button slide-wth-btn-temp">
+    			  	{{wth.res.realtime.weather.temperature}}℃
+    			</button>
+			</div>
+			<div class="col col-33">
+				<button class="button slide-wth-btn-info">
+    			  	{{wth.res.realtime.weather.info}}
+    			</button>
+			</div>
+			<div class="col">
+				<p><span>PM2.5：</span>{{wth.res.pm25.pm25.pm25}}</p>
+				<p><span>湿度：</span>{{wth.res.realtime.weather.humidity}}%</p>
+				<p>{{wth.res.realtime.wind.power}}{{wth.res.realtime.wind.direct}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="item slide-wth-ori">
+		{{wth.res.realtime.city_name}}天气&ensp;&ensp;更新时间：<span>{{wth.res.realtime.date}}&ensp;{{wth.res.realtime.time}}</span>
+	</div>
+	<div class="item slide-wth-lookmore">
+		<a ng-href="#/tab/wthcont/more">戳我了解更多天气信息</a>
+	</div>
 </div>
-
-
-

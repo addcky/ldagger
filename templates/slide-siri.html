@@ -1,0 +1,30 @@
+<ion-refresher pulling-text="..." on-refresh="siri.doRefresh()"></ion-refresher>
+<div class="list slide-calen">
+	<div class="slide-calen-title item item-divider">
+		听听笑话
+	</div>
+	<div class="item item-text-wrap tleft indent2">
+		{{siri.joker}}
+	</div>
+	<div class="slide-calen-title item item-divider">
+		看看靓图
+	</div>
+	<div class="item item-text-wrap">
+		 <img class="siri-pic-img" src="{{siri.img.url}}" alt="{{siri.img.content}}" />
+		 <p class="whiteT">{{siri.img.content}}</p>
+	</div>
+	<div class="slide-calen-title item item-divider">
+		手机号归属地
+	</div>
+	<div class="item item-input-inset">
+		<label class="item-input-wrapper">
+      		<input type="text" placeholder="查个手机号？" ng-model="siri.phone" ng-keyup="siri.enterKeyup($event)">
+    	</label>
+		<button class="button button-small" ng-click="siri.getPhoneMs()">
+      		确认
+    	</button>
+	</div>
+	<div class="item item-text-wrap siri-foot">
+		 <div ng-bind="data" ng-repeat="data in siri.res" class="tleft"></div>
+	</div>
+</div>

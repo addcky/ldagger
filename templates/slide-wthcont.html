@@ -1,0 +1,66 @@
+<ion-view view-title="{{wthMore.realtime.city_name}}天气">
+	<ion-content class="pink-ion-content" scrollbar-y="false">
+		<div class="list slide-calen">
+			<div class="slide-calen-title item item-divider">
+				生活tips
+			</div>
+			<div class="item item-text-wrap slide-calen-item" ng-repeat="info in wthInfo2">
+				<div class="row row-center">
+					<div class="col">
+						<button class="button slide-calen-btn-yi">
+	    			  		{{wthInfo1[$index]}}
+	    				</button>
+					</div>
+					<div class="col col-75">
+						<p class="colot">{{info[0]}}</p>
+						<p  class="tleft colot">{{info[1]}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="slide-sevenwth-wrap">
+				<div class="slide-calen-title item item-divider">
+					7日天气
+				</div>
+				<div class="slide-wth-wrap" ng-repeat="data in wthMore.weather">
+					<div class="slide-calen-title item item-divider slide-wth-title">
+						{{data.date}}&ensp;周{{data.week}}
+					</div>
+					<div class="row row-center">
+						<div class="col">
+							<button class="button slide-wth-btn-day">
+								白
+						    </button>
+						</div>
+						<div class="col col-36">
+							<p class="tleft whiteT">日出 {{data.info.day[5]}}</p>
+							<p class="tleft whiteT">气温 {{data.info.day[2]}}℃</p>
+							<p class="tleft whiteT">气候 {{data.info.day[1]}}</p>
+						</div>
+						<div class="col">
+							<button class="button slide-wth-btn-night">
+								夜
+						    </button>
+						</div>
+						<div class="col col-36">
+							<p class="tleft">日落 {{data.info.night[5]}}</p>
+							<p class="tleft">气温 {{data.info.night[2]}}℃</p>
+							<p class="tleft">气候 {{data.info.night[1]}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="slide-calen-title item item-divider">
+				PM2.5&ensp;More
+			</div>
+			<div class="item item-divider">
+				PM2.5日均值：{{wthMore.pm25.pm25.pm25}} ~ {{wthMore.pm25.pm25.pm10}}
+			</div>
+			<div class="item item-divider">
+				空气质量级别：{{wthMore.pm25.pm25.level}}({{wthMore.pm25.pm25.quality}})
+			</div>
+			<div class="item item-text-wrap">
+				{{wthMore.pm25.pm25.des}}
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

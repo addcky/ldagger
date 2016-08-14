@@ -1,6 +1,6 @@
 angular.module('lifetools.controllers', [])
 
-.controller('infoController', function($timeout,$rootScope,$scope, $http, $ionicLoading,$ionicPopup) {
+.controller('infoController', function($rootScope,$scope, $http, $ionicLoading,$ionicPopup) {
 	
 	//获取当前日期
 	$scope.getdate = function(){
@@ -42,22 +42,28 @@ angular.module('lifetools.controllers', [])
 		$scope.hide();
 		$rootScope.showAlert('网络错误','请检查网络···');
 	}
+	$rootScope.alertNoCity = function(){
+		$scope.hide();
+		$rootScope.showAlert('日日天气','咱不支持该城市或者输入错误···');
+	}
 	/*
 	 
 	 * 今日天气
 	 * 
 	 * */
 	//今日天气变量的集合对象
-	var clime = $scope.clime = {};
-	clime.tag = true;
+	
+	var wth = $scope.wth = {};
+	wth.tag = true;
 	//今日历史变量的集合对象
 	var datas = $scope.datas = {};
 	datas.tag = true;
-	//今日历史变量的集合对象
+	//今日助理变量的集合对象
 	var siri = $scope.siri = {};
 	siri.tag = true;
 	//请求今天日历数据
-	clime.getDateMs = function(){
+	wth.calenShow = false;
+	wth.getDateMs = function(){
 		$http.get('view/calendar.php',{
 			params:{
 				year: $scope.year,
@@ -65,11 +71,11 @@ angular.module('lifetools.controllers', [])
 				date: $scope.date
 			}
 		}).success(function(res){
-			//console.log(res.result.data);
+			
 			if(res.reason === 'Success' || res.reason === 'success'){
-				clime.res = res.result.data;
-				clime.arrYMD = clime.res.date.split('-');
-				
+				wth.resp = res.result.data;
+				wth.arrYMD = wth.resp.date.split('-');
+				//console.log(wth.resp);
 			}else{
 				$rootScope.alertCheck();
 			}
@@ -77,21 +83,30 @@ angular.module('lifetools.controllers', [])
 			$rootScope.alertRefresh();
 		});
 	}
-	clime.getDateMs();
-	clime.city = '广州';
-	clime.getWthMs = function(){
+	wth.calenClick = function(){
+		wth.calenShow?wth.calenShow = false:wth.calenShow = true;
+		if(wth.tag){
+			wth.tag = false;
+			wth.getDateMs();
+		}
+	}
+	
+	wth.city = '广州';
+	wth.getWthMs = function(){
 		$http.get('view/weather.php',{
 			params:{
-				city: clime.city
-				
+				city: wth.city				
 			}
 		}).success(function(res){
-			
+			//console.log(res);
 			if(res.reason === 'successed!'){
-				console.log(res.result);
-				//clime.res = res.result.data;
-				//clime.arrYMD = clime.res.date.split('-');
+				//console.log(res.result.data);
+				$rootScope.wthMore = wth.res = res.result.data;
+				//wth.res = res.result.data;
+				//wth.arrYMD = wth.res.date.split('-');
 				
+			}else if(res.reason === '暂不支持该城市'){
+				$rootScope.alertNoCity();
 			}else{
 				$rootScope.alertCheck();
 			}
@@ -99,30 +114,19 @@ angular.module('lifetools.controllers', [])
 			$rootScope.alertRefresh();
 		});
 	}
-	clime.getWthMs();
-	/*ionic.DomUtil.ready(function(){
-		//console.log(document.querySelectorAll('.sidr'));
-		angular.element(document.querySelectorAll('.sidr')).on('click',function(){
-			console.log(clime);
-		})
-	});
-	$timeout(function(){
-		console.log(document.querySelectorAll('.sidr'));
-		var sidr = document.querySelectorAll('.sidr');
-		//angular.element(sidr).hasClass('tab-active') && ?
-		angular.element(sidr).on('click',function(){
-			console.log(this.prototype);
-			if(this.textContent == '今日天气'){
-				datas.hist=true;
-			}else{
-				datas.hist=false;
-			}
-			
-			
-		})
-		
-		
-	},700)*/
+	wth.getWthMs();
+	wth.enterKeyup = function(e){
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13 && wth.city != ''){
+            //console.log('2');
+            wth.getWthMs();
+        }
+    };
+    wth.doRefresh = function(){
+    	wth.getDateMs();
+		wth.getWthMs();
+		$scope.$broadcast('scroll.refreshComplete');
+	}
 	
 	
 	
@@ -197,7 +201,6 @@ angular.module('lifetools.controllers', [])
 	datas.gotoday = function(){
 		$scope.getdate();
 		$scope.getMs();
-		window.screenTop();
 	}
 	//下拉刷新
 	datas.doRefresh = function(){
@@ -222,15 +225,65 @@ angular.module('lifetools.controllers', [])
 			}
         }
     };
-
-			//---上拉加载更多
-
-		/*$scope.$on('stateChangeSuccess', function() {
-		  datas.loadMore();
-		  console.log('1')
-
-		});*/
-
+    /*
+	 
+	 * 生活小助理
+	 * 
+	 * */
+    siri.getJokerMs = function(joker,opt){
+    	$http.get('view/joker.php',{
+    		params:{
+    			joker:joker
+    		}
+    	}).success(function(res){
+    		if(res.reason === 'success'){
+    			if (opt === 'joker'){
+    				siri.joker = res.result[0].content;
+    				
+    			}else{
+    				siri.img = res.result[0];
+    				//console.log(siri.img);
+    			}
+    		}else{
+				$rootScope.alertCheck();
+			}
+    	}).error(function(){
+			$rootScope.alertRefresh();
+		});   	
+    }
+    siri.getJokerMs('','joker');//getJoker
+    siri.getJokerMs('pic','pic');//getPic
+    //console.log(siri.joker[0].content);
+    siri.getPhoneMs = function(){
+    	$http.get('view/phone.php',{
+    		params:{
+    			phone:siri.phone
+    		}
+    	}).success(function(res){
+    		if(res.reason === 'Return Successd!'){
+    			siri.res = ['地区：'+res.result.province+res.result.city,
+    			            '类型：'+res.result.company+res.result.card];
+    		}else{
+    			siri.res = [res.reason,''];
+			}
+    	}).error(function(){
+			$rootScope.alertRefresh();
+		});   	
+    }
+    siri.enterKeyup = function(e){
+        var keycode = window.event?e.keyCode:e.which;
+        if(keycode==13 && siri.phone != ''){
+            //console.log('2');
+        	siri.getPhoneMs();
+        }
+    };
+    siri.doRefresh = function(){
+    	siri.getJokerMs('','joker');//getJoker
+        siri.getJokerMs('pic','pic');
+		$scope.$broadcast('scroll.refreshComplete');
+	}
+    
+    
 	})
 	.controller('tab2Controller', function($rootScope,$scope, $http, $ionicLoading,$ionicPopup) {
 
@@ -241,7 +294,18 @@ angular.module('lifetools.controllers', [])
 		$scope.title = 'tab3Controller';
 
 	})
-
+.controller('wthcontController', function($rootScope,$scope, $stateParams) {
+	$scope.wthInfo1 = ['穿衣','紫外线','运动','感冒','洗车','空调','污染'];
+	$scope.wthInfo2=[
+		$rootScope.wthMore.life.info.chuanyi,
+		$rootScope.wthMore.life.info.ziwaixian,
+		$rootScope.wthMore.life.info.yundong,
+		$rootScope.wthMore.life.info.ganmao,
+		$rootScope.wthMore.life.info.xiche,
+		$rootScope.wthMore.life.info.kongtiao,
+		$rootScope.wthMore.life.info.wuran
+	];
+})
 .controller('hiscontController', function($rootScope,$scope, $stateParams, $http) {
 	var datas = $scope.datas ={}
 	

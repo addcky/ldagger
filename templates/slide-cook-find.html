@@ -1,0 +1,45 @@
+<div class="slide-cook">
+	
+<div class="row">
+	<div class="col col-50">
+		<button class="button button-calm slide-cook-btn-yue" ng-click="cook.getCookListMs('11')">
+	  		粤菜
+		</button>
+	</div>
+	<div class="col col-50">
+		<button class="button button-assertive slide-cook-btn-ch" ng-click="cook.getCookListMs('10')">
+	  		川菜
+		</button>
+	</div>
+</div>
+<div class="row row-center">
+	<div class="col col-50">
+		<button class="button button-assertive slide-cook-btn-xi" ng-click="cook.getCookListMs('12')">
+	  		湘菜
+		</button>
+	</div>
+	<div class="col col-50">
+		<button class="button button-calm slide-cook-btn-lu" ng-click="cook.getCookListMs('13')">
+	  		鲁菜
+		</button>
+	</div>
+</div>
+<div class="item item-input-inset slide-cook-item">
+	<label class="item-input-wrapper">
+  		<input type="text" placeholder="红烧肉  酸菜鱼" ng-model="cook.name" ng-keyup="cook.enterKeyup($event)">
+	</label>
+	<button class="button button-calm" ng-click="cook.getCookMs()">
+  		搜索
+	</button>
+</div>
+<div class="item item-text-wrap slide-cook-list" ng-repeat="data in cook.res">
+	<div class="slide-calen-title item item-divider slide-wth-title" ng-bind="data.title">
+	</div>
+	<button class="button button-assertive" ng-click="cook.setCookMs(data)">
+  		保存食谱
+	</button>
+	<div class="font12 tleft" ng-bind="'tags:'+data.tags"></div>
+	<div class="tleft indent2" ng-bind="'简介:'+data.imtro"></div>
+	<a class="whiteT slide-cook-go" ng-href="#/tab/cookcont/{{data.id+'-'+data.title}}">戳我了解食谱···</a>
+</div>
+</div>

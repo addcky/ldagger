@@ -1,0 +1,27 @@
+<ion-view view-title="{{cook.title}}">
+  <ion-content class="pink-ion-content" scrollbar-y="false">
+	<ion-refresher pulling-text="..." on-refresh="cook.doRefresh()"></ion-refresher>
+	<div class="item item-text-wrap">
+		 <img class="siri-pic-img" ng-src="{{cook.res.albums[0]}}" alt="{{cook.res.title}}" />
+	</div>	
+    <div class="slide-calen-title item item-divider">
+		主配料
+	</div>
+	<div class="item item-text-wrap slide-cook-list">
+		<div class="tleft" ng-bind="'主材:'+cook.res.ingredients"></div>
+		<div class="tleft" ng-bind="'配料:'+cook.res.burden"></div>
+	</div>
+	<div class="slide-calen-title item item-divider">
+		方法步骤
+	</div>
+	<div class="item item-text-wrap slide-cook-list" ng-repeat="data in cook.res.steps">
+		<img class="siri-pic-img" ng-src="{{data.img}}" alt="{{data.step}}""/>
+		<p>{{data.step}}</p>
+	</div>
+	<div class="item item-text-wrap tcenter">
+		<button class="button button-assertive" ng-click="cook.setCookMs(cook.res)">
+	  		保存食谱
+		</button>
+	</div>
+  </ion-content>
+</ion-view>

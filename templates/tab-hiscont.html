@@ -3,7 +3,7 @@
 		<ion-refresher pulling-text="..." on-refresh="datas.doRefresh()"></ion-refresher>
 		<h2 class="hiscont-title">{{rest.title}}</h2>
 		<div class="hiscont-img-text-box">
-			<img class="hiscont-img-text-img" src="{{rest.picUrl[0].url}}" alt="{{rest.picUrl[0].pic_title}}"/>
+			<img class="hiscont-img-text-img" ng-src="{{rest.picUrl[0].url}}" alt="{{rest.picUrl[0].pic_title}}"/>
 			<p>{{rest.picUrl[0].pic_title}}</p>
 		</div>
     <p class="hiscont-main" ng-repeat="data in datas.content track by $index">{{data}}</p>		

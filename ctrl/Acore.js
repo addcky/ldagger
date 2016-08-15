@@ -21,38 +21,16 @@
 	};
 	
 	
-	//弹窗
-	$rootScope.showAlert = function(title,template,text) {
-		var alertPopup = $ionicPopup.alert({
-			title: title,
-			okText: '确定',
-			template: '<p style="width:100%;text-align:center;">'+template+'</p>',
-		});
-		alertPopup.then(function(res) {
-			//console.log(text);
-		});
-	};
-	$rootScope.alertRefresh = function(){
-		$scope.hide();
-		$rootScope.showAlert('网络错误','请刷新···');
-	}
-	$rootScope.alertCheck = function(){
-		$scope.hide();
-		$rootScope.showAlert('网络错误','请检查网络···');
-	}
-	$rootScope.alertNoCity = function(){
-		$scope.hide();
-		$rootScope.showAlert('日日天气','咱不支持该城市或者输入错误···');
-	}
+	
 	/*
 	 
 	 * 今日天气
 	 * 
 	 * */
 	//今日天气变量的集合对象
-	var clime = $scope.clime = {};
+	
 	var wth = $scope.wth = {};
-	clime.tag = true;
+	wth.tag = true;
 	//今日历史变量的集合对象
 	var datas = $scope.datas = {};
 	datas.tag = true;
@@ -60,7 +38,8 @@
 	var siri = $scope.siri = {};
 	siri.tag = true;
 	//请求今天日历数据
-	clime.getDateMs = function(){
+	wth.calenShow = false;
+	wth.getDateMs = function(){
 		$http.get('view/calendar.php',{
 			params:{
 				year: $scope.year,
@@ -68,11 +47,11 @@
 				date: $scope.date
 			}
 		}).success(function(res){
-			//console.log(res.result.data);
+			
 			if(res.reason === 'Success' || res.reason === 'success'){
-				clime.res = res.result.data;
-				clime.arrYMD = clime.res.date.split('-');
-				
+				wth.resp = res.result.data;
+				wth.arrYMD = wth.resp.date.split('-');
+				//console.log(wth.resp);
 			}else{
 				$rootScope.alertCheck();
 			}
@@ -80,7 +59,12 @@
 			$rootScope.alertRefresh();
 		});
 	}
-	clime.getDateMs();
+	wth.getDateMs();
+	wth.calenClick = function(){
+		wth.calenShow?wth.calenShow = false:wth.calenShow = true;
+		
+	}
+	
 	wth.city = '广州';
 	wth.getWthMs = function(){
 		$http.get('view/weather.php',{
@@ -92,8 +76,8 @@
 			if(res.reason === 'successed!'){
 				//console.log(res.result.data);
 				$rootScope.wthMore = wth.res = res.result.data;
-				//clime.res = res.result.data;
-				//clime.arrYMD = clime.res.date.split('-');
+				//wth.res = res.result.data;
+				//wth.arrYMD = wth.res.date.split('-');
 				
 			}else if(res.reason === '暂不支持该城市'){
 				$rootScope.alertNoCity();
@@ -113,7 +97,7 @@
         }
     };
     wth.doRefresh = function(){
-    	clime.getDateMs();
+    	wth.getDateMs();
 		wth.getWthMs();
 		$scope.$broadcast('scroll.refreshComplete');
 	}
@@ -272,4 +256,5 @@
         siri.getJokerMs('pic','pic');
 		$scope.$broadcast('scroll.refreshComplete');
 	}
+    
     

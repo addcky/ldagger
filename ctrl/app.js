@@ -32,29 +32,48 @@ angular.module('lifetools', ['ionic','lifetools.controllers'])
         'tab-info':{
             templateUrl: "templates/tab-info.html",
             controller:'infoController'
-
         }
-
     }
-
   })
-  .state('tab.tab2', {
-      url: '/tab2',
+  .state('tab.cook', {
+      url: '/cook',
       views:{
-          'tab-tab2':{
-              templateUrl: "templates/tab-tab2.html",
-              controller:'tab2Controller'
+          'tab-cook':{
+              templateUrl: "templates/tab-cook.html",
+              controller:'cookController'
           }
 
       }
 
   })
-  .state('tab.tab3', {
-      url: '/tab3',
+  .state('tab.login', {
+      url: '/login',
       views:{
-          'tab-tab3':{
-              templateUrl: "templates/tab-tab3.html",
-              controller:'tab2Controller'
+          'tab-login':{
+              templateUrl: "templates/tab-login.html",
+              controller:'loginController'
+          }
+
+      }
+
+  })
+  .state('tab.logincont', {
+      url: '/logincont/:id',
+      views:{
+          'tab-login':{
+              templateUrl: "templates/slide-logincont.html",
+              controller:'logincontController'
+          }
+
+      }
+
+  })
+  .state('tab.cookcont', {
+      url: '/cookcont/:id',
+      views:{
+          'tab-cook':{
+              templateUrl: "templates/tab-cookcont.html",
+              controller:'cookcontController'
           }
 
       }
@@ -78,7 +97,6 @@ angular.module('lifetools', ['ionic','lifetools.controllers'])
               templateUrl: "templates/slide-wthcont.html",
               controller:'wthcontController'
           }
-
       }
 
   })
@@ -87,9 +105,8 @@ angular.module('lifetools', ['ionic','lifetools.controllers'])
          url: '/news',
         templateUrl: "templates/news.html"
 
-      })
-
+    })
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/tab2');
+  $urlRouterProvider.otherwise('/tab/cook');
 
 });

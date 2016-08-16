@@ -129,15 +129,71 @@ angular.module('lifetools.controllers', [])
 })
 
 	
-	.controller('loginController', function($scope) {
-
-		$scope.title = 'loginController';
-
+	.controller('loginController', function($rootScope,$scope) {
+		var sign = $scope.sign = {};
+		sign.token = localStorage.getItem('token');
+		(sign.token === '' || sign.token === null)?($rootScope.signIn = false):(function(){
+			$rootScope.signIn = true;
+			$rootScope.signUname = sign.token;
+		})();
+		sign.signUp = function(){
+			localStorage.setItem('token','');
+			$rootScope.signIn = false;
+		}
 	})
-	.controller('logincontController', function($scope,$stateParams) {
-
-		$scope.title = 'loginController';
-
+	.controller('logincontController', function($rootScope,$scope,$stateParams) {
+		var reg = $scope.reg = {},
+			log = $scope.log = {};
+			reg.uName = '';
+			reg.psw = '';
+			reg.sPsw = '';
+			log.uName = '';
+			log.psw = '';
+			reg.uNameTips = '';
+			reg.pswTips = '';
+			reg.vPswTips = '';
+		$stateParams.id === 'reg'?reg.view = true : reg.view = false;
+		reg.vName = function(){
+			/^[a-z0-9_-]{3,16}$/.test(reg.uName)?(localStorage.getItem('user-'+reg.uName) !== null?reg.uNameTips = '该用户名已被注册':reg.uNameTips = '该用户名可以注册'):reg.uNameTips = '必须3-16位（a-z,0-9,_）';			
+		}
+		reg.vPsw = function(){
+			/^[a-z0-9_-]{6,18}$/.test(reg.psw)?reg.pswTips = '':reg.pswTips = '必须6-18位（a-z,0-9,_）'
+		}
+		reg.vsPsw = function(){
+			reg.psw === reg.sPsw?reg.vPswTips = '':reg.vPswTips = '确认密码不一致';
+		}
+		reg.sub = function(){
+			if(/^[a-z0-9_-]{3,16}$/.test(reg.uName) && localStorage.getItem('user-'+reg.uName) === null && /^[a-z0-9_-]{6,18}$/.test(reg.psw) && reg.psw === reg.sPsw){
+				$rootScope.signIn = true;
+				$rootScope.signUname = reg.uName;
+				localStorage.setItem('token',reg.uName);
+				reg.obj = {};
+				reg.obj.username = reg.uName;
+				reg.obj.psw = reg.psw;
+				localStorage.setItem('user-'+reg.uName,JSON.stringify(reg.obj));
+				$rootScope.showAlert('','注册成功');
+				window.location.href = '#/tab/login';
+			}else{
+				$rootScope.showAlert('Warm and Sweet remind','请正确填写注册信息');
+			}
+		}
+		log.sub = function(){
+			if(localStorage.getItem('user-'+log.uName) === null){
+				$rootScope.showAlert('Warm and Sweet remind','该账户未注册');
+			}else{
+				log.obj = JSON.parse(localStorage.getItem('user-'+log.uName));
+				if(log.uName === log.obj.username && log.psw === log.obj.psw){
+					$rootScope.signIn = true;
+					$rootScope.signUname = log.uName;
+					console.log($rootScope.signUname);
+					localStorage.setItem('token',log.uName);
+					window.location.href = '#/tab/login';
+				}else{
+					$rootScope.showAlert('Warm and Sweet remind','账号或者密码错误');
+				}
+			}
+			
+		}
 	})
 .controller('wthcontController', function($rootScope,$scope,$stateParams) {
 	$scope.wthInfo1 = ['穿衣','紫外线','运动','感冒','洗车','空调','污染'];

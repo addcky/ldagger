@@ -338,3 +338,10 @@ html {
 	display: inline-block;
 	text-decoration: underline;
 }
+/*---------注册登录页-----------*/
+.slide-login,.slide-reg{
+	margin-top: 30px;
+}
+.redt{
+	color:#CC3333;
+}

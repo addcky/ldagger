@@ -1,10 +1,51 @@
-<ion-view view-title="注册">
+<ion-view view-title="">
 	<ion-content scroll="false">
-		<div class="slide-cook font16" ng-if="true">
-			此处空空如也，保存菜谱来撒野···
+		<div class="slide-reg font16" ng-if="reg.view">
+			<div class="bar bar-header">
+				<div class="h1 title">注册</div>
+			</div>
+			<div class="content has-header">
+				<div class="list">
+					<label class="item item-input item-stacked-label">
+	          			<span class="input-label">用户名</span>
+	          			<span class="input-label redt">{{reg.uNameTips}}</span>
+	          			<input type="text" placeholder="示例：Johnoy" ng-blur="reg.vName()" ng-model="reg.uName">
+        			</label>
+					<label class="item item-input item-stacked-label">
+			          	<span class="input-label">密码</span>
+			          	<span class="input-label redt">{{reg.pswTips}}</span>
+			          	<input type="password" placeholder="示例：abc123" ng-blur="reg.vPsw()" ng-model="reg.psw">
+			        </label>
+					<label class="item item-input item-stacked-label">
+			          <span class="input-label">确认密码</span>
+			          <span class="input-label redt">{{reg.vPswTips}}</span>
+			          <input type="password" placeholder="示例：abc123" ng-blur="reg.vsPsw()" ng-model="reg.sPsw">
+			        </label>
+				</div>
+				<div class="padding">
+					<button class="button button-block button-positive" ng-click="reg.sub()">创建用户</button>
+				</div>
+			</div>
 		</div>
-		<div class="slide-cook font16" ng-if="true">
-			此处空空如也，保存菜谱来撒野···
-		</div>	
-  </ion-content>
+		<div class="slide-login font16" ng-if="!reg.view">
+			<div class="bar bar-header">
+		      <div class="h1 title">登录</div>
+		    </div>
+		    <div class="content has-header">
+				<div class="list">
+					<label class="item item-input item-stacked-label">
+	          			<span class="input-label">用户名</span>
+	          			<input type="text" placeholder="示例：Johnoy" ng-model="log.uName">
+        			</label>
+					<label class="item item-input item-stacked-label">
+			          	<span class="input-label">密码</span>
+			          	<input type="password" placeholder="示例：abc123" ng-model="log.psw">
+			        </label>
+				</div>
+				<div class="padding">
+					<button class="button button-block button-assertive" ng-click="log.sub()">登录</button>
+				</div>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

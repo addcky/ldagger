@@ -300,9 +300,13 @@ html {
 	background: linear-gradient(135deg, #FF6666 0, #0099CC 100%);
 	background: -webkit-linear-gradient(135deg, #FF6666 0, #0099CC 100%);
 }
+.bgcolor{
+	background: linear-gradient(135deg, #FF6666 0, #0099CC 100%);
+	background: -webkit-linear-gradient(135deg, #FF6666 0, #0099CC 100%);
+}
 /*---------cook-find-------------*/
 .slide-cook{
-	margin-top: 100px;
+	margin-top: 30px;
 	text-align: center;
 	letter-spacing: 2px;
 	box-shadow: 0 1px 3px rgba(0,0,0,.3);	

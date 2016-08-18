@@ -1,6 +1,22 @@
 <div class="slide-cook font16" ng-if="cook.space">
 	此处空空如也，保存菜谱来撒野···
 </div>
-<div class="slide-cook font16" ng-if="!cook.space">
-	此处空空如也，保存菜谱来撒野···
+<div ng-if="!cook.space" class="font16">
+	<div class="slide-cook">
+		用户：{{cook.token}}
+	</div>
+	<div class="slide-cook" ng-bind="cook.noData">
+	</div>
+	<div class="row" ng-repeat="data in cook.data">
+		<div class="col col-80">
+			{{data.title}}
+		</div>
+		<div class="col">
+			<button class="button button-small" ng-click="cook.dele(data)">
+		  		删除
+			</button>
+		</div>
+	</div>
 </div>
+
+	

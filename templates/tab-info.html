@@ -6,7 +6,7 @@
       </button>
 	</ion-nav-buttons>
 	<ion-content scroll="false" has-bouncing="true">
-		<ion-slide-box show-pager="false" ion-slide-tabs slide-tabs-scrollable="false">
+		<ion-slide-box ion-slide-tabs slide-tabs-scrollable="false" on-slide-changed="datas.slideChanged(index)" pager-click="datas.pagerClick(index)">
 			<ion-slide ion-slide-tab-label="今日天气" class="height94">
 				<ion-content scrollbar-y="false" has-bouncing="true">
 					<ng-include src="'templates/slide-weather.html'"></ng-include>

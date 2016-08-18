@@ -65,7 +65,7 @@ angular.module('lifetools.controllers', [])
 	}
 	cook.getCookMs = function(){
  		if(cook.name != '' && cook.name != ' '){
- 			$http.get('view/cookname.php',{
+ 			$http.get('http://wx.addcky.top/xiaobai/cookname.php',{
  				params:{
  					name:cook.name
  				}
@@ -78,16 +78,16 @@ angular.module('lifetools.controllers', [])
  		}		
  	}
  	cook.getCookListMs = function(listName){		
- 		$http.get('view/cooklistname.php',{
+ 		$http.get('http://wx.addcky.top/xiaobai/cooklistname.php',{
   			params:{ 							
  				listname:listName
   			}
   		}).success(function(res){
  			if(res.reason === 'Success'){
- 				cook.res = res.result.data
+ 				cook.res = res.result.data;
  				//console.log(res.result.data)
   			}			
- 		})
+ 		});
 	}
 	
 	cook.setCookMs = function(that){
@@ -101,12 +101,24 @@ angular.module('lifetools.controllers', [])
 			cook.newObj.psw = cook.oldValue.psw;
 			if(!cook.oldValue.data){
 				cook.newObj.data = [that];
+				localStorage.setItem(('user-'+cook.token),JSON.stringify(cook.newObj));
+				$rootScope.showAlert('','已成功保存到"我的私房菜"');
 			}else{
-				cook.oldValue.data.unshift(that);
-				cook.newObj.data = cook.oldValue.data;
+				cook.bt = true;
+				for(var i=0;i<cook.oldValue.data.length;i++){
+					if(cook.oldValue.data[i].id === that.id){
+						cook.bt = false;
+						$rootScope.showAlert('','请勿重复保存同一食谱');
+						break;
+					}
+				}
+				if(cook.bt){
+					cook.oldValue.data.unshift(that);
+					cook.newObj.data = cook.oldValue.data;
+					localStorage.setItem(('user-'+cook.token),JSON.stringify(cook.newObj));
+					$rootScope.showAlert('','已成功保存到"我的私房菜"');
+				}
 			}
-			localStorage.setItem(('user-'+cook.token),JSON.stringify(cook.newObj));
-			$rootScope.showAlert('','已成功保存到"我的私房菜"');
 		}else{
 			$rootScope.showAlert('','请先登录');
 		}
@@ -120,11 +132,10 @@ angular.module('lifetools.controllers', [])
 		cook.newObj.psw = cook.oldValue.psw;
 		cook.newObj.data = [];
 		for(var i=0; i<cook.oldValue.data.length;i++){
-			if(cook.oldValue.data[i].title != that.title){
+			if(cook.oldValue.data[i].id != that.id){
 				cook.newObj.data.push(cook.oldValue.data[i])
 			}
 		}
-		
 		cook.data = cook.newObj.data;
 		localStorage.setItem(('user-'+cook.token),JSON.stringify(cook.newObj));
 	}
@@ -179,7 +190,7 @@ angular.module('lifetools.controllers', [])
 	//请求今天日历数据
 	wth.calenShow = false;
 	wth.getDateMs = function(){
-		$http.get('view/calendar.php',{
+		$http.get('http://wx.addcky.top/xiaobai/calendar.php',{
 			params:{
 				year: $scope.year,
 				month: $scope.month,
@@ -203,21 +214,21 @@ angular.module('lifetools.controllers', [])
 		wth.calenShow?wth.calenShow = false:wth.calenShow = true;
 		
 	}
-	
-	wth.city = '广州';
+	if(localStorage.getItem('wthcity')){
+		wth.city = localStorage.getItem('wthcity');
+	}else{
+		wth.city = '广州';
+	}
 	wth.getWthMs = function(){
-		$http.get('view/weather.php',{
+		$http.get('http://wx.addcky.top/xiaobai/weather.php',{
 			params:{
 				city: wth.city				
 			}
 		}).success(function(res){
-			//console.log(res);
 			if(res.reason === 'successed!'){
 				//console.log(res.result.data);
 				$rootScope.wthMore = wth.res = res.result.data;
-				//wth.res = res.result.data;
-				//wth.arrYMD = wth.res.date.split('-');
-				
+				localStorage.setItem('wthcity',wth.city);
 			}else if(res.reason === '暂不支持该城市'){
 				$rootScope.alertNoCity();
 			}else{
@@ -260,7 +271,7 @@ angular.module('lifetools.controllers', [])
 			$scope.show();
 			//console.log('2')
 		}
-		$http.get('view/history.php', {
+		$http.get('http://wx.addcky.top/xiaobai/history.php', {
 			params: {
 				month: $scope.month,
 				date: $scope.date
@@ -344,7 +355,7 @@ angular.module('lifetools.controllers', [])
 	 * 
 	 * */
     siri.getJokerMs = function(joker,opt){
-    	$http.get('view/joker.php',{
+    	$http.get('http://wx.addcky.top/xiaobai/joker.php',{
     		params:{
     			joker:joker
     		}
@@ -368,7 +379,7 @@ angular.module('lifetools.controllers', [])
     siri.getJokerMs('pic','pic');//getPic
     //console.log(siri.joker[0].content);
     siri.getPhoneMs = function(){
-    	$http.get('view/phone.php',{
+    	$http.get('http://wx.addcky.top/xiaobai/phone.php',{
     		params:{
     			phone:siri.phone
     		}
@@ -403,7 +414,7 @@ angular.module('lifetools.controllers', [])
 	cook.id = $stateParams.id.split('-')[0];
 	cook.title = $stateParams.id.split('-')[1];
 	cook.getCookMs = function(){
-		$http.get('view/cookid.php',{
+		$http.get('http://wx.addcky.top/xiaobai/cookid.php',{
 			params:{
 				id:cook.id
 			}
@@ -446,7 +457,7 @@ angular.module('lifetools.controllers', [])
 			reg.vPswTips = '';
 		$stateParams.id === 'reg'?reg.view = true : reg.view = false;
 		reg.vName = function(){
-			/^[a-z0-9_-]{3,16}$/.test(reg.uName)?(localStorage.getItem('user-'+reg.uName) !== null?reg.uNameTips = '该用户名已被注册':reg.uNameTips = '该用户名可以注册'):reg.uNameTips = '必须3-16位（a-z,0-9,_）';			
+			/^[a-z0-9_-]{3,16}$/.test(reg.uName)?(localStorage.getItem('user-'+reg.uName) !== null?reg.uNameTips = '该用户名已被注册':reg.uNameTips = ''):reg.uNameTips = '必须3-16位（a-z,0-9,_）';			
 		}
 		reg.vPsw = function(){
 			/^[a-z0-9_-]{6,18}$/.test(reg.psw)?reg.pswTips = '':reg.pswTips = '必须6-18位（a-z,0-9,_）'
@@ -503,7 +514,7 @@ angular.module('lifetools.controllers', [])
 	var datas = $scope.datas ={}
 	
 	datas.getMs = function(){
-		$http.get('view/historyId.php', {
+		$http.get('http://wx.addcky.top/xiaobai/historyId.php', {
 			params: {
 				id: $stateParams.id
 			}

@@ -10,7 +10,95 @@ angular.module('lifetools.controllers', [])
 				localStorage.setItem('firstSvgShow',true);
 				scope.firstSvgShow = true;
 			}
+			scope.dayinBox = ['写到最后才发现...','我没有UI美工的设计...','我没有后端数据库...','我没有提要求的产品经理...','罢了罢了...'];
+			
+			
+			scope.slideHasChanged = function(idx){
+				if(idx ==3){
+					
+					scope.dayin = ['','','','',''];
+					scope.dayinTag = [1,1,1,1,1];
+					
+						//逐字打印scope.dayinBox里的内容，仿打印机效果
+						clearInterval(scope.st1);
+						scope.st1 = setInterval(function(){
+							if(scope.dayinTag[0] > scope.dayinBox[0].length){
+								clearInterval(scope.st1);
+							}else{
+								scope.dayin[0] = scope.dayinBox[0].substring(0,scope.dayinTag[0]++);
+								scope.$apply();
+							}
+							
+						},500);
+						clearInterval(scope.st2);
+						clearTimeout(scope.sot2);
+						scope.sot2 = setTimeout(function(){
+							scope.st2 = setInterval(function(){
+								if(scope.dayinTag[1] > scope.dayinBox[1].length){
+									clearInterval(scope.st2);
+									clearTimeout(scope.sot2);
+								}else{
+									scope.dayin[1] = scope.dayinBox[1].substring(0,scope.dayinTag[1]++);
+									scope.$apply();
+								}
+							},500);
+						},5000);
+						clearInterval(scope.st3);
+						clearTimeout(scope.sot3);
+						scope.sot3 = setTimeout(function(){
+							scope.st3 = setInterval(function(){
+								if(scope.dayinTag[2] > scope.dayinBox[2].length){
+									clearInterval(scope.st3);
+									clearTimeout(scope.sot3);
+								}else{
+									scope.dayin[2] = scope.dayinBox[2].substring(0,scope.dayinTag[2]++);
+									scope.$apply();
+								}
+							},500);
+						},11500);
+						clearInterval(scope.st4);
+						clearTimeout(scope.sot4);
+						scope.sot4 = setTimeout(function(){
+							scope.st4 = setInterval(function(){
+								if(scope.dayinTag[3] > scope.dayinBox[3].length){
+									clearInterval(scope.st4);
+									clearTimeout(scope.sot4);
+								}else{
+									scope.dayin[3] = scope.dayinBox[3].substring(0,scope.dayinTag[3]++);
+									scope.$apply();
+								}
+							},500);
+						},17000);
+						clearInterval(scope.st5);
+						clearTimeout(scope.sot5);
+						scope.sot5 = setTimeout(function(){
+							scope.st5 = setInterval(function(){
+								if(scope.dayinTag[4] > scope.dayinBox[4].length){
+									clearInterval(scope.st5);
+									clearTimeout(scope.sot5);
+								}else{
+									scope.dayin[4] = scope.dayinBox[4].substring(0,scope.dayinTag[4]++);
+									scope.$apply();
+								}
+							},500);
+						},24000);
+					
+				}else{
+					scope.dayin = ['','','','',''];
+					
+				}
+			}
+			//scope.firstSvgShow = true;
 			scope.enterapp = function(){
+				clearInterval(scope.st1);
+				clearInterval(scope.st2);
+				clearTimeout(scope.sot2);
+				clearInterval(scope.st3);
+				clearTimeout(scope.sot3);
+				clearInterval(scope.st4);
+				clearTimeout(scope.sot4);
+				clearInterval(scope.st5);
+				clearTimeout(scope.sot5);
 				scope.firstSvgShow = false;
 			}
 		}
